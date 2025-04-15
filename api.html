@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Joke Generator</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #dfe9f3, #ffffff);
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: #44617f;
+      color: white;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+    }
+
+    main {
+      flex: 1;
+      padding: 2rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .joke-box {
+      background: #fff;
+      border-radius: 12px;
+      padding: 2rem;
+      width: 100%;
+      max-width: 600px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .joke-text {
+      font-size: 1.2rem;
+      color: #444;
+      margin-bottom: 1.5rem;
+      min-height: 60px;
+    }
+
+    #btn {
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      background-color: #44617f;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease;
+    }
+
+    #btn:hover {
+      background-color: #0056b3;
+    }
+
+    footer {
+      background-color: #f1f1f1;
+      padding: 1rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666;
+      border-top: 1px solid #ddd;
+    }
+
+    footer a {
+      color: #44617f;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive design */
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 1.4rem;
+      }
+
+      .joke-text {
+        font-size: 1rem;
+      }
+
+      #btn {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>😂 Random Joke Generator</h1>
+  </header>
+
+  <main>
+    <div class="joke-box">
+      <p class="joke-text">Click the button to get a joke!</p>
+      <button id="btn">Get Joke</button>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2025 JokeTime Inc. | Powered by 
+    <a href="https://api-ninjas.com/api/jokes" target="_blank">API Ninjas <br>
+    Developed By: Khan Obaid</a>
+  </footer>
+
+  <script>
+    const URL = "https://api.api-ninjas.com/v1/jokes";
+    const p = document.querySelector('.joke-text');
+
+    document.querySelector('#btn').addEventListener('click', async function () {
+      try {
+        const response = await fetch(URL, {
+          headers: {
+            'X-Api-Key': 'iKt45/fNjOiZ6+qr0XCFlg==bC8LIdyYqbpXfuGE'
+          }
+        });
+
+        const data = await response.json();
+        p.innerHTML = data[0].joke;
+      } catch (error) {
+        p.innerHTML = "Oops! Couldn't fetch a joke 😢";
+        console.error(error);
+      }
+    });
+  </script>
+
+</body>
+</html>
