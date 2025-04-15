@@ -3,152 +3,121 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Joke Generator</title>
+  <title>Random Joke Generator</title>
   <style>
     * {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
     }
 
     body {
+      margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #dfe9f3, #ffffff);
-      color: #333;
+      background: linear-gradient(to bottom, #dbeafe, #f0f8ff);
       display: flex;
       flex-direction: column;
       min-height: 100vh;
     }
 
     header {
-      background-color: #44617f;
+      background-color: #3b5998;
       color: white;
-      padding: 1.5rem 1rem;
+      padding: 1rem;
       text-align: center;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    header h1 {
       font-size: 1.8rem;
+      font-weight: bold;
     }
 
-    main {
+    .container {
       flex: 1;
-      padding: 2rem 1rem;
       display: flex;
-      flex-direction: column;
-      align-items: center;
       justify-content: center;
-    }
-
-    .joke-box {
-      background: #fff;
-      border-radius: 12px;
+      align-items: center;
       padding: 2rem;
-      width: 100%;
-      max-width: 600px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      transition: all 0.3s ease-in-out;
     }
 
-    .joke-text {
+    .card {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .joke {
       font-size: 1.2rem;
-      color: #444;
       margin-bottom: 1.5rem;
-      min-height: 60px;
     }
 
     #btn {
-      padding: 0.8rem 1.5rem;
-      font-size: 1rem;
-      background-color: #44617f;
+      padding: 10px 25px;
+      background-color: #3b5998;
       color: white;
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      transition: background-color 0.3s ease;
+      font-size: 1rem;
+      transition: background-color 0.3s;
     }
 
     #btn:hover {
-      background-color: #0056b3;
+      background-color: #2d4373;
     }
 
     footer {
       background-color: #f1f1f1;
-      padding: 1rem;
       text-align: center;
+      padding: 1rem;
       font-size: 0.9rem;
-      color: #666;
-      border-top: 1px solid #ddd;
+      color: #555;
     }
 
-    footer a {
-      color: #44617f;
-      text-decoration: none;
-    }
-
-    footer a:hover {
-      text-decoration: underline;
-    }
-
-    /* Responsive design */
-    @media (max-width: 480px) {
-      header h1 {
-        font-size: 1.4rem;
+    @media (max-width: 600px) {
+      .card {
+        padding: 1.5rem;
       }
 
-      .joke-text {
+      .joke {
         font-size: 1rem;
-      }
-
-      #btn {
-        padding: 0.7rem 1.2rem;
-        font-size: 0.9rem;
       }
     }
   </style>
 </head>
 <body>
-
-  <header>
-    <h1>😂 Random Joke Generator</h1>
-  </header>
-
-  <main>
-    <div class="joke-box">
-      <p class="joke-text">Click the button to get a joke!</p>
+  <header>😄 Random Joke Generator</header>
+  <div class="container">
+    <div class="card">
+      <p class="joke">Click the button to get a joke!</p>
       <button id="btn">Get Joke</button>
     </div>
-  </main>
-
+  </div>
   <footer>
-    &copy; 2025 JokeTime Inc. | Powered by 
-    <a href="https://api-ninjas.com/api/jokes" target="_blank">API Ninjas <br>
-    Developed By: Khan Obaid</a>
+    © 2025 JokeTime Inc. | Powered by API Ninjas<br>
+    Developed By: Khan Obaid
   </footer>
 
   <script>
-    const URL = "https://api.api-ninjas.com/v1/jokes";
-    const p = document.querySelector('.joke-text');
+    const btn = document.getElementById('btn');
+    const jokeText = document.querySelector('.joke');
 
-    document.querySelector('#btn').addEventListener('click', async function () {
+    btn.addEventListener('click', async () => {
       try {
-        const response = await fetch(URL, {
+        const res = await fetch("https://api.api-ninjas.com/v1/jokes", {
           headers: {
-            'X-Api-Key': 'iKt45/fNjOiZ6+qr0XCFlg==bC8LIdyYqbpXfuGE'
+            'X-Api-Key': 'YOUR_API_KEY_HERE'
           }
         });
 
-        const data = await response.json();
-        p.innerHTML = data[0].joke;
-      } catch (error) {
-        p.innerHTML = "Oops! Couldn't fetch a joke 😢";
-        console.error(error);
+        if (!res.ok) throw new Error("Failed to fetch joke");
+
+        const data = await res.json();
+        jokeText.textContent = data[0].joke;
+      } catch (err) {
+        console.error(err);
+        jokeText.textContent = "Could not fetch joke 😢";
       }
     });
   </script>
-
 </body>
 </html>
